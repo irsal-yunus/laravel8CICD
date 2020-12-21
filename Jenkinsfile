@@ -10,9 +10,9 @@ pipeline {
             } */
             steps {
                 bat 'php --version'
-                bat 'composer self-update --stable'
-                bat 'composer install'
                 bat 'composer --version'
+                bat 'composer self-update --stable'
+                bat 'COMPOSER_MEMORY_LIMIT=-1 composer install'                
                 bat 'cp .env.example .env'
                 bat 'echo DB_HOST=${DB_HOST} >> .env'
                 bat 'echo DB_USERNAME=${DB_USERNAME} >> .env'
