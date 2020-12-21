@@ -10,6 +10,7 @@ pipeline {
             } */
             steps {
                 bat 'php --version'
+                bat 'composer self-update --stable'
                 bat 'composer install'
                 bat 'composer --version'
                 bat 'cp .env.example .env'
