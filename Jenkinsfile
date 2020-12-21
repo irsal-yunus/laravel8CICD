@@ -9,42 +9,42 @@ pipeline {
                 DB_PASSWORD = credentials("")
             }
             steps {
-                sh 'php --version'
-                sh 'composer install'
-                sh 'composer --version'
-                sh 'cp .env.example .env'
-                sh 'echo DB_HOST=${DB_HOST} >> .env'
-                sh 'echo DB_USERNAME=${DB_USERNAME} >> .env'
-                sh 'echo DB_DATABASE=${DB_DATABASE} >> .env'
-                sh 'echo DB_PASSWORD=${DB_PASSWORD} >> .env'
-                sh 'php artisan key:generate'
-                sh 'cp .env .env.testing'
-                sh 'php artisan migrate'
+                bat 'php --version'
+                bat 'composer install'
+                bat 'composer --version'
+                bat 'cp .env.example .env'
+                bat 'echo DB_HOST=${DB_HOST} >> .env'
+                bat 'echo DB_USERNAME=${DB_USERNAME} >> .env'
+                bat 'echo DB_DATABASE=${DB_DATABASE} >> .env'
+                bat 'echo DB_PASSWORD=${DB_PASSWORD} >> .env'
+                bat 'php artisan key:generate'
+                bat 'cp .env .env.testing'
+                bat 'php artisan migrate'
             }
         }
         stage("Unit test") {
             steps {
-                sh 'php artisan test'
+                bat 'php artisan test'
             }
         }
         stage("Code coverage") {
             steps {
-                sh "vendor/bin/phpunit --coverage-html 'reports/coverage'"
+                bat "vendor/bin/phpunit --coverage-html 'reports/coverage'"
             }
         }
         stage("Static code analysis larastan") {
             steps {
-                sh "vendor/bin/phpstan analyse --memory-limit=2G"
+                bat "vendor/bin/phpstan analyse --memory-limit=2G"
             }
         }
         stage("Static code analysis phpcs") {
             steps {
-                sh "vendor/bin/phpcs"
+                bat "vendor/bin/phpcs"
             }
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t irsal-yunus/laravel8CICD ."
+                bat "docker build -t irsal-yunus/laravel8CICD ."
             }
         }
         stage("Docker push") {
@@ -53,28 +53,28 @@ pipeline {
                 DOCKER_PASSWORD = credentials("irsal12345")
             }
             steps {
-                sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                sh "docker push irsal-yunus/laravel8CICD"
+                bat "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
+                bat "docker push irsal-yunus/laravel8CICD"
             }
         }
         stage("Deploy to staging") {
             steps {
-                sh "docker run -d --rm -p 80:80 --name laravel8CICD irsal-yunus/laravel8CICD"
+                bat "docker run -d --rm -p 80:80 --name laravel8CICD irsal-yunus/laravel8CICD"
             }
         }
         stage("Acceptance test curl") {
             steps {
                 sleep 20
-                sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
+                bat "chmod +x acceptance_test.sh && ./acceptance_test.sh"
             }
         }
         stage("Acceptance test codeception") {
             steps {
-                sh "vendor/bin/codecept run"
+                bat "vendor/bin/codecept run"
             }
             post {
                 always {
-                    sh "docker stop laravel8CICD"
+                    bat "docker stop laravel8CICD"
                 }
             }
         }
