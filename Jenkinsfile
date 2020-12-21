@@ -22,7 +22,7 @@ pipeline {
                 bat 'php artisan migrate'
             }
         }
-        stage("Unit test") {
+       /* stage("Unit test") {
             steps {
                 bat 'php artisan test'
             }
@@ -77,6 +77,6 @@ pipeline {
                     bat "docker stop laravel8CICD"
                 }
             }
-        }
+        } */
     }
 }
