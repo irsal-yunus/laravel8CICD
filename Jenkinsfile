@@ -3,10 +3,10 @@ pipeline {
     stages {
         stage("Build") {
             environment {
-                DB_HOST = credentials("laravel-host")
-                DB_DATABASE = credentials("laravel-database")
-                DB_USERNAME = credentials("laravel-user")
-                DB_PASSWORD = credentials("laravel-password")
+                DB_HOST = credentials("127.0.0.1")
+                DB_DATABASE = credentials("laravel")
+                DB_USERNAME = credentials("root")
+                DB_PASSWORD = credentials("")
             }
             steps {
                 sh 'php --version'
@@ -44,22 +44,22 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t danielgara/laravel8cd ."
+                sh "docker build -t irsal-yunus/laravel8CICD ."
             }
         }
         stage("Docker push") {
             environment {
-                DOCKER_USERNAME = credentials("docker-user")
-                DOCKER_PASSWORD = credentials("docker-password")
+                DOCKER_USERNAME = credentials("ichalapyel")
+                DOCKER_PASSWORD = credentials("irsal12345")
             }
             steps {
                 sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                sh "docker push danielgara/laravel8cd"
+                sh "docker push irsal-yunus/laravel8CICD"
             }
         }
         stage("Deploy to staging") {
             steps {
-                sh "docker run -d --rm -p 80:80 --name laravel8cd danielgara/laravel8cd"
+                sh "docker run -d --rm -p 80:80 --name laravel8CICD irsal-yunus/laravel8CICD"
             }
         }
         stage("Acceptance test curl") {
@@ -74,7 +74,7 @@ pipeline {
             }
             post {
                 always {
-                    sh "docker stop laravel8cd"
+                    sh "docker stop laravel8CICD"
                 }
             }
         }
