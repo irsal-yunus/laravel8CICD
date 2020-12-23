@@ -60,7 +60,7 @@ pipeline {
         }
         stage("Deploy to staging") {
             steps {
-                bat "docker run -d --rm -p 80:80 --name laravel8cicd laravel8cicd"
+              /*  bat "docker run -d --rm -p 80:80 --name laravel8cicd laravel8cicd" */
             }
         }
         stage("Acceptance test curl") {
