@@ -11,7 +11,7 @@ pipeline {
             steps {
                 bat 'php --version'
                 bat 'composer --version'              
-                bat 'COMPOSER_MEMORY_LIMIT=-1 composer install'                
+                bat 'composer install'                
                 bat 'cp .env.example .env'
                 bat 'echo DB_HOST=${DB_HOST} >> .env'
                 bat 'echo DB_USERNAME=${DB_USERNAME} >> .env'
@@ -22,7 +22,7 @@ pipeline {
                 bat 'php artisan migrate'
             }
         }
-       /* stage("Unit test") {
+        stage("Unit test") {
             steps {
                 bat 'php artisan test'
             }
@@ -77,6 +77,6 @@ pipeline {
                     bat "docker stop laravel8CICD"
                 }
             }
-        } */
+        } 
     }
 }
