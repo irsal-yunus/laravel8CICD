@@ -2,12 +2,12 @@ pipeline {
     agent any
     stages {
         stage("Build") {
-            bat '''environment {
+           /* environment {
                 DB_HOST = credentials("127.0.0.1")
                 DB_DATABASE = credentials("laravel")
                 DB_USERNAME = credentials("root")
                 DB_PASSWORD = credentials("")
-            }'''
+            } */
             steps {
                 bat 'php --version'
                 bat 'composer --version'              
