@@ -54,12 +54,12 @@ pipeline {
             }
             steps {
                 bat "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                bat "docker push irsal-yunus/laravel8CICD"
+                bat "docker push laravel8cicd"
             }
         }
         stage("Deploy to staging") {
             steps {
-                bat "docker run -d --rm -p 80:80 --name laravel8CICD irsal-yunus/laravel8CICD"
+                bat "docker run -d --rm -p 80:80 --name laravel8cicd laravel8cicd"
             }
         }
         stage("Acceptance test curl") {
@@ -74,7 +74,7 @@ pipeline {
             }
             post {
                 always {
-                    bat "docker stop laravel8CICD"
+                    bat "docker stop laravel8cicd"
                 }
             }
         } 
