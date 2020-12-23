@@ -66,7 +66,7 @@ pipeline {
         stage("Acceptance test curl") {
             steps {
                 sleep 20
-                bat "CACLS files /e /p %ACER%:f acceptance_test.sh && .\acceptance_test.sh"
+                bat "CACLS files /e /p %ACER%:f acceptance_test.sh && ./acceptance_test.sh"
             }
         }
         stage("Acceptance test codeception") {
