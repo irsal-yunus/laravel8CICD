@@ -12,13 +12,13 @@ pipeline {
                 bat 'php --version'
                 bat 'composer --version'              
                 bat 'composer install'                
-                bat 'cp .env.example .env'
+                bat 'copy .env.example .env'
                 bat 'echo DB_HOST=${DB_HOST} >> .env'
                 bat 'echo DB_USERNAME=${DB_USERNAME} >> .env'
                 bat 'echo DB_DATABASE=${DB_DATABASE} >> .env'
                 bat 'echo DB_PASSWORD=${DB_PASSWORD} >> .env'
                 bat 'php artisan key:generate'
-                bat 'cp .env .env.testing'
+                bat 'copy .env .env.testing'
                 bat 'php artisan migrate'
             }
         }
@@ -65,7 +65,7 @@ pipeline {
         stage("Acceptance test curl") {
             steps {
                 sleep 20
-                bat "chmod +x acceptance_test.sh && ./acceptance_test.sh"
+                bat "CACLS files /e /p %ACCER%:f acceptance_test.sh && ./acceptance_test.sh"
             }
         }
         stage("Acceptance test codeception") {
