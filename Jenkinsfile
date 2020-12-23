@@ -44,7 +44,7 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                bat "docker build -t irsalyunus/laravel8cicd ."
+                bat "docker build -t laravel8cicd -f Dockerfile ."
             }
         }
         stage("Docker push") {
