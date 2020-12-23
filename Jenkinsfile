@@ -53,7 +53,7 @@ pipeline {
                 DOCKER_PASSWORD = credentials("irsal12345")                
             } */
             steps {
-                bat "docker login"
+                bat "docker login -u ichalapyel -p irsal12345"
                 bat "docker tag laravel8cicd ichalapyel/laravel8cicd "
                 bat "docker push ichalapyel/laravel8cicd"
             }
