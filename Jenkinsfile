@@ -50,11 +50,12 @@ pipeline {
         stage("Docker push") {
             environment {
                 DOCKER_USERNAME = credentials("ichalapyel")
-                DOCKER_PASSWORD = credentials("irsal12345")
+                DOCKER_PASSWORD = credentials("irsal12345")                
             }
             steps {
                 bat "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                bat "docker push laravel8cicd"
+                bat "docker tag laravel8cicd ${DOCKER_USERNAME}/laravel8cicd "
+                bat "docker push ${DOCKER_USERNAME}/laravel8cicd"
             }
         }
         stage("Deploy to staging") {
